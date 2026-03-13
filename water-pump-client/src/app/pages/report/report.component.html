@@ -1,0 +1,20 @@
+<div class="report-container">
+  <div class="left-block">
+    <ng-container *ngIf="userRole">
+      <app-device-list (deviceSelected)="onDeviceSelected($event)" (createDevice)="openCreateDeviceModal()"
+        [userRole]="userRole">
+      </app-device-list>
+    </ng-container>
+  </div>
+  <div class="right-block">
+    <ng-container *ngIf="selectedDevice">
+      <app-device-detail *ngIf="selectedDevice" [device]="selectedDevice" [userRole]="userRole"
+        [latestTelemetry]="lastTelemetry" [telemetryHistory]="telemetryHistory"
+        (editDeviceEvent)="openEditDeviceModal()"
+        (deleteDeviceEvent)="onDeleteDevice(selectedDevice!)"></app-device-detail>
+    </ng-container>
+  </div>
+  <app-device-form *ngIf="showModal" [device]="isEditing ? selectedDevice : null" [showModal]="showModal"
+    (formSubmit)="onFormSubmit($event)" (closeModalEvent)="closeModal()">
+  </app-device-form>
+</div>

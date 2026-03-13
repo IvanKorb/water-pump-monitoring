@@ -1,0 +1,91 @@
+<div *ngIf="showResetModal" class="modal" (click)="closeResetModalByClickOutside($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeResetModal()">&times;</span>
+    <div class="modal-header">{{ 'DEVICE_EVENTS.RESET_CONFIRM_TITLE' | translate }}</div>
+    <div class="modal-body">
+      <p>{{ 'DEVICE_EVENTS.RESET_CONFIRM_TEXT' | translate }} <strong>{{ device?.name }}</strong>?</p>
+      <div class="modal-actions">
+        <button (click)="confirmResetAlerts()" class="btnConfirm">{{ 'BUTTON.YES' | translate }}</button>
+        <button (click)="closeResetModal()" class="btnCancel">{{ 'BUTTON.CANCEL' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="events-container">
+  <div class="events-header">
+    <div class="filters-left">
+      <input type="date" [(ngModel)]="startDate" class="date-picker"
+        [attr.placeholder]="'DEVICE_EVENTS.DATE_FROM' | translate" />
+      <input type="date" [(ngModel)]="endDate" class="date-picker"
+        [attr.placeholder]="'DEVICE_EVENTS.DATE_TO' | translate" />
+      <button class="loadBtn" (click)="loadEvents(startDate, endDate)"
+        [attr.title]="'DEVICE_EVENTS.LOAD_DATA' | translate">
+        <i class="fas fa-search"></i>
+      </button>
+      <button class="export-btn" (click)="exportData('excel')" [attr.title]="'DEVICE_EVENTS.EXPORT' | translate">
+        <i class="fas fa-file-export"></i>
+      </button>
+    </div>
+
+    <div class="filters-right">
+      <button class="reset-alerts" (click)="resetAllAlerts()" [attr.title]="'DEVICE_EVENTS.RESET_ALL' | translate">
+        <i class="fas fa-bell-slash"></i>
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="events.length > 0; else noEventsTemplate">
+    <div class="table-wrapper">
+      <table class="events-table">
+        <thead>
+          <tr>
+            <th>{{ 'DEVICE_EVENTS.TIME' | translate }}</th>
+            <th>{{ 'DEVICE_EVENTS.ALARM_UPPER' | translate }}</th>
+            <th>{{ 'DEVICE_EVENTS.UPPER' | translate }}</th>
+            <th>{{ 'DEVICE_EVENTS.RSSI' | translate }}</th>
+            <th>{{ 'DEVICE_EVENTS.STATUS_CONFIRM' | translate }}</th>
+            <th>{{ 'DEVICE_EVENTS.ACTION' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of events">
+            <td [ngStyle]="{ 'color': event.isCurrent === true ?  '#2600ff' : '' }">
+              {{ event.timestamp | date: 'dd.MM.yyyy, HH:mm:ss' }}
+            </td>
+
+            <td [ngStyle]="{ 'color': event.input1 ? '#C00D0D' : '#32AE73' }">
+              {{ event.input1 ? ('STATUS.EXCEEDED' | translate) : ('STATUS.NORMAL' | translate) }}
+            </td>
+
+            <td [ngStyle]="{ 'color': event.input2 ? '#C00D0D' : '#32AE73' }">
+              {{ event.input2 ? ('STATUS.EXCEEDED' | translate) : ('STATUS.NORMAL' | translate) }}
+            </td>
+
+            <td>{{ event.rssi }}</td>
+
+            <td [ngStyle]="{ 'color': (event.status === ('STATUS.CONFIRMED' | translate)) ? '#32AE73' : '#C00D0D' }">
+              {{
+              (event.status === ('confirmed') || event.status === ('canceled'))
+              ? (event.acceptedAt | date: 'dd.MM.yyyy, HH:mm:ss') + ' ' + event.operatorName + ' ' + (event.status === ('confirmed') ? ('STATUS.CONFIRMED' | translate) : ('STATUS.CANCELED' | translate))
+              : (event.input1 || event.input2)
+              ? ('DEVICE_EVENTS.STATUS_REQUIRED' | translate)
+              : ''
+              }}
+            </td>
+
+            <td>
+              <button *ngIf="(event.input1 || event.input2) && event.status !== ('confirmed')"
+                (click)="confirmEvent(event)" class="confirm-btn">
+                {{ 'BUTTON.CONFIRM' | translate }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+
+  <ng-template #noEventsTemplate>
+    <p class="no-events-message">{{ 'DEVICE_EVENTS.NO_EVENTS' | translate }}</p>
+  </ng-template>
+</div>

@@ -1,0 +1,47 @@
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+button {
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: #FFF;
+  padding: 0;
+  margin-top: 5px;
+  margin-left: 5px;
+  color: #2B255D;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.2);
+}
+
+p {
+  margin: 0.5rem;
+}

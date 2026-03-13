@@ -1,0 +1,36 @@
+.app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  z-index: 1000;
+  font-family: "Arial", sans-serif;
+  padding-top: 2px;
+}
+
+/* Левая заглушка, чтобы центр был идеально центром */
+.footer-left {
+  width: 120px; /* столько же, сколько занимает правая часть */
+}
+
+.footer-center {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.footer-right {
+  display: flex;
+  justify-content: flex-end;
+  width: 120px; /* фиксируем ширину правого блока */
+}
+
+.date,
+.time {
+  margin-left: 10px;
+}

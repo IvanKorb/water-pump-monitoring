@@ -1,0 +1,106 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+  box-sizing: border-box;
+  background: radial-gradient(circle, #6e7f80, #c9d6cf);
+}
+
+body {
+  background-color: #333;
+  color: white;
+}
+
+.login-container {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  box-sizing: border-box;
+
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-container h2 {
+  text-align: center;
+  
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.login-container div {
+  margin-bottom: 15px;
+}
+
+.login-container label {
+  font-weight: 500;
+  font-size: medium;
+}
+
+.login-container input,
+.login-container button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.login-container button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.login-container button:disabled {
+  background-color: #aaa;
+}
+
+.login-container button:hover {
+  transform: scale(1.05);
+}
+button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.err {
+  color: red;
+}
+
+.labelText{
+  font-size: 14px !important;
+}
+.headerText {
+  font-weight: 500;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}

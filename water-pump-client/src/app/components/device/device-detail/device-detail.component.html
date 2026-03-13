@@ -1,0 +1,552 @@
+<div class="device-details" *ngIf="device">
+  <div class="left-device-details">
+    <div class="text-device">
+      <!-- Хедер + кнопки -->
+      <div class="info-device">
+        <div class="textHeader padTextHeader">
+          {{ 'DEVICE_DETAIL.OBJECT_DATA' | translate }}
+        </div>
+        <div *ngIf="userRole === 'admin'">
+          <button (click)="editDevice()" class="buttonDetail" [ngStyle]="{ color: '#32AE73' }"
+            title="{{ 'DEVICE_DETAIL.EDIT' | translate }}">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button (click)="showDeleteConfirmation()" class="buttonDetail" [ngStyle]="{ color: '#C00D0D' }"
+            title="{{ 'DEVICE_DETAIL.DELETE' | translate }}">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Блок: базовая инфа -->
+      <div class="device-section">
+        <div class="device-name">{{ device.name }}</div>
+
+        <div class="kv-row">
+          <div class="kv-label">{{ 'DEVICE_DETAIL.DEVEUI' | translate }}</div>
+          <div class="kv-value mono section-title">{{ device.devEui }}</div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-label">
+            {{ 'DEVICE_DETAIL.PACKET_COUNT' | translate }}
+          </div>
+          <div class="kv-value">
+            {{ counterPacket !== null ? counterPacket : '-' }}
+          </div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-label">
+            {{ 'DEVICE_DETAIL.TIMESTAMP' | translate }}
+          </div>
+          <div class="kv-value">
+            {{ device.timestamp ? (device.timestamp | date: 'dd.MM.yyyy, HH:mm:ss') : '-' }}
+          </div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-label">{{ 'DEVICE_DETAIL.RSSI' | translate }}</div>
+          <div class="kv-value">
+            {{ device.rssi !== undefined && device.rssi !== null ? device.rssi : '-' }}
+          </div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-label">SNR</div>
+          <div class="kv-value">
+            {{ device.snr !== undefined && device.snr !== null ? device.snr : '-' }}
+          </div>
+        </div>
+
+        <div class="kv-row">
+          <div class="kv-label">
+            {{ 'DEVICE_DETAIL.DESCRIPTION' | translate }}
+          </div>
+          <div class="kv-value">
+            {{ device.description ? device.description : '-' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок: частотник + электрика -->
+      <div class="device-section">
+        <div class="section-title">
+          {{ 'DEVICE_DETAIL.METER_PHASES' | translate : { default: 'Измеритель электроэнергии' } }}
+        </div>
+
+        <div class="metrics-grid meter-grid">
+          <!-- Левая колонка: напряжения фаз -->
+          <div class="meter-column">
+            <div class="metric-item">
+              <div class="metric-label">{{ 'DEVICE_DETAIL.CH1APHASEVOLTAGE' | translate }}</div>
+              <div class="metric-value">
+                {{ device.ch1AphaseVoltage !== undefined && device.ch1AphaseVoltage !== null
+                ? (device.ch1AphaseVoltage | number:'1.0-1') : '-' }}
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-label">{{ 'DEVICE_DETAIL.CH1BPHASEVOLTAGE' | translate }}</div>
+              <div class="metric-value">
+                {{ device.ch1BphaseVoltage !== undefined && device.ch1BphaseVoltage !== null
+                ? (device.ch1BphaseVoltage | number:'1.0-1') : '-' }}
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-label">{{ 'DEVICE_DETAIL.CH1CPHASEVOLTAGE' | translate }}</div>
+              <div class="metric-value">
+                {{ device.ch1CphaseVoltage !== undefined && device.ch1CphaseVoltage !== null
+                ? (device.ch1CphaseVoltage | number:'1.0-1') : '-' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Правая колонка: токи фаз -->
+          <div class="meter-column">
+            <div class="metric-item">
+              <div class="metric-label">{{ 'DEVICE_DETAIL.CH1APHASECURRENT' | translate }}</div>
+              <div class="metric-value">
+                {{ device.ch1AphaseCurrent !== undefined && device.ch1AphaseCurrent !== null
+                ? (device.ch1AphaseCurrent | number:'1.0-2') : '-' }}
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-label">{{ 'DEVICE_DETAIL.CH1BPHASECURRENT' | translate }}</div>
+              <div class="metric-value">
+                {{ device.ch1BphaseCurrent !== undefined && device.ch1BphaseCurrent !== null
+                ? (device.ch1BphaseCurrent | number:'1.0-2') : '-' }}
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-label">{{ 'DEVICE_DETAIL.CH1CPHASECURRENT' | translate }}</div>
+              <div class="metric-value">
+                {{ device.ch1CphaseCurrent !== undefined && device.ch1CphaseCurrent !== null
+                ? (device.ch1CphaseCurrent | number:'1.0-2') : '-' }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          {{ 'DEVICE_DETAIL.FLOW_METER' | translate : { default: 'Расходомер' } }}
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.FLOWRATE' | translate }}</div>
+            <div class="metric-value">
+              {{ device.flowRate !== undefined && device.flowRate !== null ? (device.flowRate | number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.VELOCITY' | translate }}</div>
+            <div class="metric-value">
+              {{ device.velocity !== undefined && device.velocity !== null ? (device.velocity | number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.POSITIVEACCUMULATOR' | translate }}</div>
+            <div class="metric-value">
+              {{ device.positiveAccumulator !== undefined && device.positiveAccumulator !== null ?
+              (device.positiveAccumulator | number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.NEGATIVEACCUMULATOR' | translate }}</div>
+            <div class="metric-value">
+              {{ device.negativeAccumulator !== undefined && device.negativeAccumulator !== null ?
+              (device.negativeAccumulator | number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+
+        </div>
+        <div class="section-title">
+          {{ 'DEVICE_DETAIL.DRIVE_METRICS' | translate : { default: 'Частотный преобразователь' } }}
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div class="metric-label"> {{ 'DEVICE_DETAIL.OUTPUTFREQUENCY' | translate }}</div>
+            <div class="metric-value">
+              {{ device.outputfrequency !== undefined && device.outputfrequency !== null ? (device.outputfrequency |
+              number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.SETFREQUENCY' | translate }}</div>
+            <div class="metric-value">
+              {{ device.setfrequency !== undefined && device.setfrequency !== null ? (device.setfrequency |
+              number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.OUTPUTCURRENT' | translate }}</div>
+            <div class="metric-value">
+              {{ device.outputcurrent !== undefined && device.outputcurrent !== null ? (device.outputcurrent |
+              number:'1.0-2') : '-' }}
+            </div>
+          </div>
+
+          <div class="metric-item">
+            <div class="metric-label">{{ 'DEVICE_DETAIL.OUTPUTVOLTAGE' | translate }} </div>
+            <div class="metric-value">
+              {{ device.outputvoltage !== undefined && device.outputvoltage !== null ? (device.outputvoltage |
+              number:'1.0-2') : '-' }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок: статусы (лампочки) -->
+      <div class="device-section">
+        <!-- <div class="section-title">
+          {{ 'DEVICE_DETAIL.DRIVE_STATUS' | translate : { default: 'Статусы привода' } }}
+        </div> -->
+
+        <!-- Группа 1: режим работы -->
+        <div class="status-group">
+          <div class="section-title">
+            {{ 'DEVICE_DETAIL.DRIVE_STATUS_MODE' | translate }}
+          </div>
+
+          <div class="status-grid">
+            <div class="status-pill" [class.on]="device.running" [attr.title]="'DEVICE_DETAIL.RUNNING' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.RUNNING' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.reverse" [attr.title]="'DEVICE_DETAIL.REVERSE' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.REVERSE' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.zeroSpeed" [attr.title]="'DEVICE_DETAIL.ZEROSPEED' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.ZEROSPEED' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.accelerating"
+              [attr.title]="'DEVICE_DETAIL.ACCELERATING' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.ACCELERATING' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.decelerating"
+              [attr.title]="'DEVICE_DETAIL.DECELERATING' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.DECELERATING' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.constantSpeed"
+              [attr.title]="'DEVICE_DETAIL.CONSTANTSPEED' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.CONSTANTSPEED' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.preExcitation"
+              [attr.title]="'DEVICE_DETAIL.PREEXCITATION' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.PREEXCITATION' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.autoTuning"
+              [attr.title]="'DEVICE_DETAIL.AUTOTUNING' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.AUTOTUNING' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.speedControl"
+              [attr.title]="'DEVICE_DETAIL.SPEEDCONTROL' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.SPEEDCONTROL' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.torqueControl"
+              [attr.title]="'DEVICE_DETAIL.TORQUECONTROL' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.TORQUECONTROL' | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Группа 2: ограничения / аварии -->
+        <div class="status-group">
+          <div class="section-title">
+            {{ 'DEVICE_DETAIL.DRIVE_STATUS_LIMITS' | translate }}
+          </div>
+
+          <div class="status-grid">
+            <div class="status-pill" [class.on]="device.overcurrentLimit"
+              [attr.title]="'DEVICE_DETAIL.OVERCURRENTLIMIT' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.OVERCURRENTLIMIT' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.overvoltageLimit"
+              [attr.title]="'DEVICE_DETAIL.OVERVOLTAGELIMIT' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.OVERVOLTAGELIMIT' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.torqueLimit"
+              [attr.title]="'DEVICE_DETAIL.TORQUELIMIT' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.TORQUELIMIT' | translate }}</span>
+            </div>
+
+            <div class="status-pill" [class.on]="device.speedLimit"
+              [attr.title]="'DEVICE_DETAIL.SPEEDLIMIT' | translate">
+              <span class="status-dot"></span>
+              <span>{{ 'DEVICE_DETAIL.SPEEDLIMIT' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПРАВАЯ ЧАСТЬ — КАК БЫЛО -->
+  <div class="right-device-details">
+    <div class="textHeader">{{ 'DEVICE_DETAIL.TELEMERY_INFO' | translate }}</div>
+
+    <ng-container *ngIf="device">
+      <div class="telemetry-table-wrapper">
+
+        <!-- Панель фильтров по датам (пока без логики) -->
+        <div class="telemetry-filters">
+          <div class="filters-left">
+            <div class="filter-group">
+              <label>
+                <span>От:</span>
+                <input type="date" [(ngModel)]="dateFrom" />
+              </label>
+              <label>
+                <span>До:</span>
+                <input type="date" [(ngModel)]="dateTo" />
+              </label>
+            </div>
+
+            <button class="btn-filter primary" [disabled]="!dateFrom || !dateTo || isLoadingHistory"
+              (click)="applyDateFilter()">
+              <i class="fas fa-filter"></i>
+            </button>
+
+            <!-- Кнопка сброса фильтра показывается только в history-режиме -->
+            <button class="btn-filter" *ngIf="isHistoryMode" (click)="resetDateFilter()" [disabled]="isLoadingHistory"
+              title="Сбросить фильтр">
+              <i class="fas fa-times"></i>
+            </button>
+
+            <button class="btn-filter" (click)="exportData('excel')">
+              <i class="fas fa-file-excel"></i>
+            </button>
+          </div>
+
+          <div class="filters-right">
+
+            <button class="btn-pump" [disabled]="pumpPending" [ngClass]="{
+  'pump-disabled': pumpPending,
+  'pump-start': !pumpPending && pumpState === 'start',
+  'pump-stop' : !pumpPending && pumpState === 'stop'
+}" (click)="openPumpConfirm()">
+              <span *ngIf="!pumpPending">
+                {{ pumpState === 'stop' ? ('DEVICE_DETAIL.PUMPSTOP' | translate) : ('DEVICE_DETAIL.PUMPSTART' |
+                translate) }}
+              </span>
+
+              <span *ngIf="pumpPending">
+                <i class="fas fa-spinner fa-spin"></i>&nbsp;...
+              </span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Обёртка со скроллом -->
+        <div class="telemetry-table-container" *ngIf="displayTelemetry && displayTelemetry.length; else noTelemetry">
+          <table class="telemetry-table">
+
+            <thead>
+
+              <!-- ░░░ ПЕРВАЯ ЛИНИЯ — ГРУППЫ ░░░ -->
+              <tr class="header-group-row">
+
+                <!-- Время — лучше отдельная группа -->
+                <th class="group-time" colspan="1">
+                  {{ 'DEVICE_EVENTS.TIME' | translate : { default: 'Время' } }}
+                </th>
+
+                <!-- Частотный преобразователь: теперь 5 колонок -->
+                <th class="group-drive" colspan="5">
+                  {{ 'DEVICE_DETAIL.DRIVE_METRICS' | translate : { default: 'Частотный преобразователь' } }}
+                </th>
+
+                <!-- Электрика -->
+                <th class="group-meter" colspan="6">
+                  {{ 'DEVICE_DETAIL.METER_PHASES' | translate : { default: 'Измеритель электроэнергии' } }}
+                </th>
+
+                <!-- Расходомер -->
+                <th class="group-flow" colspan="5">
+                  {{ 'DEVICE_DETAIL.FLOW_METER' | translate : { default: 'Расходомер' } }}
+        
+                </th>
+              </tr>
+
+              <!-- ░░░ ВТОРАЯ ЛИНИЯ — КОРОТКИЕ ОБОЗНАЧЕНИЯ ░░░ -->
+              <tr class="header-label-row">
+
+                <!-- TIME -->
+                <th class="col-time">t</th>
+
+                <!-- DRIVE (5) -->
+                <th class="col-drive">f<sub>out</sub></th>
+                <th class="col-drive">f<sub>set</sub></th>
+                <th class="col-drive">I<sub>out</sub></th>
+                <th class="col-drive">U<sub>out</sub></th>
+                <th class="col-drive">status</th>
+
+                <!-- METER (6) -->
+                <th class="col-meter">U<sub>A</sub></th>
+                <th class="col-meter">U<sub>B</sub></th>
+                <th class="col-meter">U<sub>C</sub></th>
+                <th class="col-meter">I<sub>A</sub></th>
+                <th class="col-meter">I<sub>B</sub></th>
+                <th class="col-meter">I<sub>C</sub></th>
+
+                <!-- FLOW (4) -->
+                <th class="col-flow">Q</th>
+                <th class="col-flow">v</th>
+                <th class="col-flow">V<sub>d</sub></th>
+                <th class="col-flow">ΔV<sub>d</sub>           <span class="sum-inline">
+                    ΣΔVd= {{ getDeltaVdSum() | number:'1.0-2' }}
+                  </span></th>
+                <th class="col-flow">V<sub>r</sub></th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let t of displayTelemetry; let i = index">
+                <!-- TIME -->
+                <td class="col-time">
+                  {{
+                  t.timestamp
+                  ? (t.timestamp | date: 'dd.MM.yyyy, HH:mm:ss')
+                  : '—'
+                  }}
+                </td>
+
+                <!-- DRIVE -->
+                <td class="col-drive">
+                  {{ t.outputfrequency != null ? (t.outputfrequency | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-drive">
+                  {{ t.setfrequency != null ? (t.setfrequency | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-drive">
+                  {{ t.outputcurrent != null ? (t.outputcurrent | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-drive">
+                  {{ t.outputvoltage != null ? (t.outputvoltage | number:'1.0-1') : '-' }}
+                </td>
+                <td class="col-drive mono">
+                  {{ t.inverterrunningstatus || '-' }}
+                </td>
+
+                <!-- METER -->
+                <td class="col-meter">
+                  {{ t.ch1AphaseVoltage != null ? (t.ch1AphaseVoltage | number:'1.1-1') : '-' }}
+                </td>
+                <td class="col-meter">
+                  {{ t.ch1BphaseVoltage != null ? (t.ch1BphaseVoltage | number:'1.1-1') : '-' }}
+                </td>
+                <td class="col-meter">
+                  {{ t.ch1CphaseVoltage != null ? (t.ch1CphaseVoltage | number:'1.1-1') : '-' }}
+                </td>
+                <td class="col-meter">
+                  {{ t.ch1AphaseCurrent != null ? (t.ch1AphaseCurrent | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-meter">
+                  {{ t.ch1BphaseCurrent != null ? (t.ch1BphaseCurrent | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-meter">
+                  {{ t.ch1CphaseCurrent != null ? (t.ch1CphaseCurrent | number:'1.0-2') : '-' }}
+                </td>
+                <!-- FLOW -->
+                <td class="col-flow">
+                  {{ t.flowRate != null ? (t.flowRate | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-flow">
+                  {{ t.velocity != null ? (t.velocity | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-flow">
+                  {{ t.positiveAccumulator | noGroupNumber:2 }}
+                </td>
+                <td class="col-flow">
+                  {{ getDeltaVd(i) != null ? (getDeltaVd(i) | number:'1.0-2') : '-' }}
+                </td>
+                <td class="col-flow">
+                  {{ t.negativeAccumulator != null ? (t.negativeAccumulator | number:'1.0-2') : '-' }}
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+
+        <ng-template #noTelemetry>
+          <div class="no-telemetry">Нет данных телеметрии</div>
+        </ng-template>
+
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="showDeleteModal" class="modal" (click)="closeDeleteModalByClickOutside($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="closeDeleteModal()">&times;</span>
+      <div class="modal-header">{{ 'DEVICE_DETAIL.CONFIRM_TITLE' | translate}}</div>
+      <div class="modal-body">
+        <p>{{ 'DEVICE_DETAIL.CONFIRM_QUESTION' | translate}} <strong>{{ device.name }}</strong>?</p>
+        <div class="modal-actions">
+          <button (click)="confirmDelete()" class="btnConfirm">{{ 'BUTTON.YES' | translate}}</button>
+          <button (click)="closeDeleteModal()" class="btnConfirm">{{ 'BUTTON.CANCEL' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="showPumpConfirm" class="modal" (click)="closePumpConfirmByOutside($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="closePumpConfirm()">&times;</span>
+
+      <div class="modal-header">
+        {{ 'DEVICE_DETAIL.PUMP_CONFIRM_TITLE' | translate }}
+      </div>
+
+      <div class="modal-body">
+        <p>{{ 'DEVICE_DETAIL.PUMP_CONFIRM_QUESTION' | translate }}</p>
+        <div class="modal-actions">
+          <button (click)="confirmPumpAction()" class="btnConfirm">
+            {{ 'DEVICE_DETAIL.PUMP_CONFIRM_YES' | translate }}
+          </button>
+
+          <button (click)="closePumpConfirm()" class="btnConfirm">
+            {{ 'DEVICE_DETAIL.PUMP_CONFIRM_NO' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

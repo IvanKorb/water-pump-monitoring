@@ -1,0 +1,100 @@
+.contanerHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.device-list ul {
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.device-list li {
+
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  padding-left: 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.device-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.device-list li.selected {
+  background-color: #d0d0d0;
+}
+
+.device-list li > .name {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.device-list li > .icon, .device-list li > .timestamp {
+  flex: 0 0 15%; 
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.device-list li > .timestamp {
+  flex: 0 0 45%; 
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.textHeader{
+  padding-left:  16px;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.text-success {
+  color: #32AE73;
+}
+
+.text-bell {
+  color: #ffc107;
+}
+
+.text-danger {
+  color: #9b8c8c; 
+}
+
+.filter-input {
+  width: 90%;
+  padding: 8px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.filter-input:focus {
+  outline: none; 
+  border-bottom-color: #ccc;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #c00d0d;
+}
+
+.status-dot.on {
+  background: #32ae73;
+}

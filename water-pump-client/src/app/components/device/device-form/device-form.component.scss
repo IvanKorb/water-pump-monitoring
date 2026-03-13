@@ -1,0 +1,149 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  top: 10%;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: scaleUp 0.3s ease-out;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close:hover {
+  transform: scale(1.2);
+  color: #C00D0D;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.modal-body {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.modal-body form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-body form label {
+  margin-bottom: 10px;
+}
+
+.modal-body form input,
+.modal-body form textarea {
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.error-message {
+  color: #C00D0D;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  background-color: #32AE73;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+button:hover {
+  transform: scale(1.01);
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-container label {
+  margin-right: 10px;
+}
+
+.form-control-checkbox {
+  width: auto;
+  margin-bottom: 0.7rem !important;
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+@media (max-height: 800px) {
+  .modal-content {
+    top: 5%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

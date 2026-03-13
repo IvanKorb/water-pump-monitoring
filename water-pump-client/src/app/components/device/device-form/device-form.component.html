@@ -1,0 +1,34 @@
+<div class="modal" *ngIf="showModal">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div class="modal-header">
+      {{ device ? ('DEVICE_FORM.EDIT_TITLE' | translate) : ('DEVICE_FORM.CREATE_TITLE' | translate) }}
+    </div>
+
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()" #deviceForm="ngForm">
+        <label for="name">{{ 'DEVICE_FORM.NAME_LABEL' | translate }}</label>
+        <input id="name" [(ngModel)]="deviceData.name" name="name" required #name="ngModel" class="form-control" />
+        <div *ngIf="name.invalid && name.touched" class="error-message">
+          {{ 'ERRORS.NAME_REQUIRED' | translate }}
+        </div>
+
+        <label for="devEui">{{ 'DEVICE_FORM.DEVEUI_LABEL' | translate }}</label>
+        <input id="devEui" [(ngModel)]="deviceData.devEui" name="devEui" required pattern="^[0-9A-Fa-f]{16}$"
+          minlength="16" maxlength="16" #devEui="ngModel" class="form-control" />
+
+        <label for="description">{{ 'DEVICE_FORM.DESCRIPTION_LABEL' | translate }}</label>
+        <textarea id="description" [(ngModel)]="deviceData.description" name="description" rows="3"
+          class="form-control"></textarea>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+        <button type="submit" [disabled]="deviceForm.invalid" class="submit-button">
+          <i *ngIf="!deviceForm.invalid" class="fas fa-check"></i>
+          <i *ngIf="deviceForm.invalid" class="fas fa-times"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

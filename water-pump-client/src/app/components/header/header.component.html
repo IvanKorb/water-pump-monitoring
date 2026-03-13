@@ -1,0 +1,22 @@
+<header class="app-header">
+  <div class="logo">
+    <span class="system-name">{{ 'HEADER.TITLE' | translate }}</span>
+  </div>
+  <nav class="navigation">
+    <a routerLink="/monitoring" routerLinkActive="active">{{ 'HEADER.MONITORING' | translate }}</a>
+    <a routerLink="/user" routerLinkActive="active" *ngIf="userRole === 'admin'"><i class="fas fa-user-circle"></i></a>
+    <div class="language-dropdown" (click)="toggleLangMenu()">
+      <i class="fas fa-globe"></i>
+      <ul class="lang-menu" [class.open]="langMenuOpen">
+        <li *ngFor="let lang of languages" (click)="switchLanguage(lang.code); $event.stopPropagation()"
+          [class.active]="currentLang === lang.code">
+          {{ lang.code.toUpperCase() }}
+        </li>
+      </ul>
+    </div>
+
+    <a *ngIf="isLoggedIn()" (click)="logout()" class="logout-button">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </nav>
+</header>

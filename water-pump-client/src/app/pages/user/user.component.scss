@@ -1,0 +1,328 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
+  background:#c9d6cf;
+}
+.report-container {
+  padding-top: 5px;
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  padding-left: 10px;
+  height:  calc(100vh - 110px);
+}
+
+.contanerHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-list ul {
+  max-height: calc(100vh - 165px);
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.user-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.user-list li.selected {
+  background-color: #d0d0d0;
+}
+
+.user-list li > .name {
+  flex: 0 0 30%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-list li > .role, 
+.user-list li > .timestamp {
+  flex: 0 0 20%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-list li > .actions {
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.user-list li > .actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.textHeader{
+  padding-left:  16px;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.form-group-pass{
+  text-align: center;
+
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.8);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  top: 10%;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: scaleUp 0.3s ease-out;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close:hover {
+  color: red;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.modal-body {
+  font-size: 1rem;
+  color: #444;
+  margin-left: 0rem;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  width: 40%;
+  padding: 10px 20px;
+  background-color: #32AE73 !important;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions button:hover {
+  transform: scale(1.08);
+
+}
+
+.modal-actions button+button {
+  background-color: #C00D0D !important;
+}
+
+.modal-actions button+button:hover {
+  transform: scale(1.08);
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  top: 10%;
+  width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: scaleUp 0.3s ease-out;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.close:hover {
+  color: red;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.modal-body {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.form-control {
+  width: 96%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  width: 40%;
+  padding: 10px 20px;
+  background-color: #32AE73;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions button:hover {
+  background-color: #32AE73;
+}
+
+.modal-actions button+button {
+  background-color: #C00D0D;
+}
+
+.modal-actions button+button:hover {
+  background-color: #e53935;
+}
+.password-change-header {
+  display: flex;
+  justify-content: flex-start;
+padding-left: 8px;
+}
+
+.password-change-button {
+  width: 120px;
+  background-color: #32AE73;
+  color: white;
+  border: none;
+
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.password-change-button:hover {
+  background-color: #32AE73;
+  transform: scale(1.08);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}

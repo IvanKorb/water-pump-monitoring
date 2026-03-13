@@ -1,0 +1,12 @@
+<footer class="app-footer">
+  <div class="footer-left"></div>
+
+  <div class="footer-center">
+    &copy; Ivan Korablyov 2025 <span *ngIf="currentYear !== 2025">- {{ currentYear }}</span>
+  </div>
+
+  <div class="footer-right">
+    <span class="date">{{ getCurrentDate() }}</span>
+    <span class="time">{{ currentTime }}</span>
+  </div>
+</footer>

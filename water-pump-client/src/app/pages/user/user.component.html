@@ -1,0 +1,121 @@
+<div class="user-list">
+  <div class="password-change-header">
+    <button class="password-change-button" (click)="openChangePasswordModal()"
+      [title]="'USER.CHANGE_PASSWORD' | translate">
+      {{ 'USER.CHANGE_PASSWORD' | translate }}
+    </button>
+  </div>
+
+  <div *ngIf="userRole === 'admin'">
+    <div class="containerHeader">
+      <div class="textHeader">{{ 'USER.TITLE' | translate }}</div>
+      <button class="create-button" (click)="openCreateUserModal()" [title]="'USER.ADD' | translate">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+
+    <ul>
+      <li *ngFor="let user of users">
+        <span class="name">{{ user.login || '-' }}</span>
+        <span class="role">{{ user.name || ('USER.NO_NAME' | translate) }}</span>
+        <span class="timestamp">{{ user.dateCreate ? (user.dateCreate | date: 'dd.MM.yyyy HH:mm') : '-' }}</span>
+        <span class="actions">
+          <button (click)="onEditUser(user)" class="buttonDetail" [ngStyle]="{ 'color': '#32AE73' }"
+            [title]="'USER.EDIT' | translate">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button class="buttonDetail" (click)="onDelete(user)" [ngStyle]="{ 'color': '#C00D0D' }"
+            [title]="'USER.DELETE' | translate">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </span>
+      </li>
+    </ul>
+
+    <div *ngIf="showDeleteModal" class="modal">
+      <div class="modal-content">
+        <span class="close" (click)="closeDeleteModal()">&times;</span>
+        <div class="modal-header">
+          {{ 'USER.CONFIRM_DELETE_TITLE' | translate }}
+        </div>
+        <div class="modal-body">
+          <p>
+            {{ 'USER.CONFIRM_DELETE_TEXT' | translate }}
+            <strong>{{ userToDelete?.login }}</strong>?
+          </p>
+          <div class="modal-actions">
+            <button (click)="confirmDelete()" class="btnConfirm">
+              {{ 'BUTTON.YES' | translate }}
+            </button>
+            <button (click)="closeDeleteModal()" class="btnConfirm">
+              {{ 'BUTTON.CANCEL' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showModal" class="modal">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <div class="modal-header">
+          {{ isEditing ? ('USER.EDIT_USER' | translate) : ('USER.CREATE_USER' | translate) }}
+        </div>
+        <div class="modal-body">
+          <form #userForm="ngForm" (ngSubmit)="onFormSubmit(userForm.value)">
+            <input type="hidden" [(ngModel)]="selectedUser._id" name="_id" />
+            <div class="form-group">
+              <label for="login">{{ 'USER.LOGIN' | translate }}</label>
+              <input id="login" name="login" [(ngModel)]="selectedUser.login" required class="form-control"
+                autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label for="name">{{ 'USER.NAME' | translate }}</label>
+              <input id="name" name="name" [(ngModel)]="selectedUser.name" class="form-control" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label for="password">{{ 'USER.PASSWORD' | translate }}</label>
+              <input id="password" name="password" [(ngModel)]="selectedUser.password" required type="password"
+                class="form-control" autocomplete="off" />
+            </div>
+            <div class="modal-actions">
+              <button type="submit" class="btnConfirm">
+                {{ isEditing ? ('USER.UPDATE' | translate) : ('USER.CREATE' | translate) }}
+              </button>
+              <button type="button" (click)="closeModal()" class="btnConfirm">
+                {{ 'BUTTON.CANCEL' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showChangePasswordModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeChangePasswordModal()">&times;</span>
+    <div class="modal-header">
+      {{ 'USER.CHANGE_PASSWORD' | translate }}
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onPasswordChangeSubmit({ newPassword: newPassword })">
+        <div class="form-group-pass">
+          <label for="newPassword">
+            {{ 'USER.NEW_PASSWORD' | translate }}
+          </label>
+          <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required />
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btnConfirm">
+            {{ 'USER.CHANGE_PASSWORD' | translate }}
+          </button>
+          <button type="button" (click)="closeChangePasswordModal()" class="btnConfirm">
+            {{ 'BUTTON.CANCEL' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="device-list">
+  <div class="contanerHeader">
+    <div class="textHeader">{{ 'DEVICE_LIST.TITLE' | translate }}</div>
+    <button class="create-button" (click)="openCreateDeviceModal()" [title]="'DEVICE_LIST.ADD_TOOLTIP' | translate"
+      *ngIf="userRole === 'admin'">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </div>
+  <input class="filter-input" type="text" [(ngModel)]="filterText" (input)="filterDevices()"
+    [placeholder]="'DEVICE_LIST.SEARCH_PLACEHOLDER' | translate">
+
+  <ul>
+    <li *ngFor="let device of filteredDevices" (click)="selectDevice(device)"
+      [class.selected]="selectedDevice?.devEui === device.devEui">
+      <span class="name">{{ device.name || '-' }}</span>
+      <span class="status-dot" [class.on]="device.running" [title]="device.running ? 'Запущен' : 'Остановлен'"></span>
+      <!-- <span class="timestamp">
+        {{ device.timestamp ? (device.timestamp | date: 'dd.MM.yyyy HH:mm') : '-' }}
+      </span> -->
+    </li>
+  </ul>
+</div>

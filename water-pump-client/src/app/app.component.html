@@ -1,0 +1,7 @@
+<app-header *ngIf="!isLoginPage()"></app-header>
+
+<div class="router-content">
+  <router-outlet></router-outlet>
+</div>
+
+<app-footer *ngIf="!isLoginPage()"></app-footer>
